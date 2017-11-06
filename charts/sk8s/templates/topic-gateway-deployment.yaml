@@ -26,19 +26,21 @@ spec:
             httpGet:
               path: /health
               port: {{ .Values.topicGateway.service.internalPort }}
-            initialDelaySeconds: 90
+            initialDelaySeconds: 60
             periodSeconds: 15
             timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /health
               port: {{ .Values.topicGateway.service.internalPort }}
-            initialDelaySeconds: 60
-            periodSeconds: 15
+            initialDelaySeconds: 30
+            periodSeconds: 10
             timeoutSeconds: 5
           ports:
             - containerPort: {{ .Values.topicGateway.service.internalPort }}
           env:
+          - name: SERVER_PORT
+            value: '{{ .Values.topicGateway.service.internalPort }}'
           - name: JAVA_TOOL_OPTIONS
             value: '-Xmx512m'
           - name: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
